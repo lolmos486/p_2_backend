@@ -1,0 +1,2 @@
+class InvalParam (Exception):
+    pass
