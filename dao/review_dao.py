@@ -11,7 +11,7 @@ class ReviewDao:
                              password="password") as conn:
             with conn.cursor() as cur:
                 cur.execute(f"INSERT INTO project_2.reviews (isbn, review, usr, rating) VALUES "
-                            f"('{rev_obj.isbn}', '{rev_obj.review}', '{rev_obj.user}', '{rev_obj.rating}');")
+                            f"(%s, %s, %s, %s);", (rev_obj.isbn, rev_obj.review, rev_obj.user, rev_obj.rating))
 
 # Read
     def get_reviews(self, usn, isbn):
