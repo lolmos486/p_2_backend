@@ -1,16 +1,22 @@
 import psycopg
 from model.user import User
+
 from dao.review_dao import ReviewDao
+
 
 class UserDao:
     def __init__(self):
         self.rd = ReviewDao()
 
+class UserDao:
+    def __init__(self):
+        pass
 # Create
     def create_user(self, user_obj):
         with psycopg.connect(host="localhost", port="5432", dbname="postgres", user="postgres",
                              password="password") as conn:
             with conn.cursor() as cur:
+
                 cur.execute(f"INSERT INTO project_2.users (username, password, fav_genre, date_joined) "
                             f"VALUES ('{user_obj.usn}', crypt('{user_obj.pwd}', gen_salt('bf')), "
                             f"'{user_obj.fav_genre}', '{user_obj.joined}');")
@@ -30,6 +36,7 @@ class UserDao:
                     for rev in revs:
                         user.set_review(rev)
                     return user
+
 
     def get_all_users(self):
         users = []
