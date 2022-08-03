@@ -6,7 +6,7 @@ bc = Blueprint('book_controller', __name__)
 bs = BookService()
 
 # Create
-@bc.route('/book', methods = ['PUT'])
+@bc.route('/book', methods = ['POST'])
 def new_book():
     pass
 
@@ -16,14 +16,16 @@ def get_book(isbn):
     pass
 
 # Update
-@bc.route('/books/<isbn>', methods = ['POST'])
+@bc.route('/books/<isbn>', methods = ['PUT'])
 def edit_book_attributes(isbn):
     pass
 
-@bc.route('/books/<oldisbn>', methods = ['POST'])
+@bc.route('/books/<oldisbn>', methods = ['PUT'])
 def edit_isbn(oldisbn):
     pass
 
 
 # Delete
-
+@bc.route('/books/<isbn>', methods = ['DELETE'])
+def delete_book(isbn):
+    return "No"
