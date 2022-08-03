@@ -59,6 +59,7 @@ class UserDao:
                              password="password") as conn:
             with conn.cursor() as cur:
                 cur.execute(f"UPDATE project_2.users SET is_admin = '{admin}' WHERE username = '{usn}';")
+                conn.commit()
 
 # Delete
 
@@ -67,3 +68,4 @@ class UserDao:
                              password="password") as conn:
             with conn.cursor() as cur:
                 cur.execute(f"DELETE FROM project_2.users WHERE username = '{usn}';")
+                conn.commit()

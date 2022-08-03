@@ -52,3 +52,9 @@ class BookDao:
 
 
 # Delete
+    def delete_book(self, isbn):
+        with psycopg.connect(host="localhost", port="5432", dbname="postgres", user="postgres",
+                             password="password") as conn:
+            with conn.cursor() as cur:
+                cur.execute(f"DELETE FROM project_2.books WHERE isbn = '{isbn}';")
+                conn.commit()
