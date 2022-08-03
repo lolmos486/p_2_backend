@@ -12,7 +12,8 @@ class BookDao:
                              password="password") as conn:
             with conn.cursor() as cur:
                 cur.execute(f"INSERT INTO project_2.books (isbn, title, author, edition) VALUES "
-                            f"(%s, %s, %s, %s);", (book_obj.isbn, book_obj.title, book_obj.author, book_obj.edition))
+                            f"(%s, %s, %s, %s, %s);", (book_obj.isbn, book_obj.title, book_obj.author, book_obj.edition,
+                                                       book_obj.genre))
                 conn.commit()
 
 
