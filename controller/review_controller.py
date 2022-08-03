@@ -7,9 +7,18 @@ rs = ReviewService()
 
 
 # Create
+@rc.route('/book/review', methods=['POST'])
+def new_review():
+    pass
 
 # Read
+@rc.route('/book')
+def get_reviews():
+    pass
 
 # Update
 
 # Delete
+@rc.route('/book/<review>')
+def delete_review():
+    pass
