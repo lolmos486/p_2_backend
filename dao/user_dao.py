@@ -6,6 +6,24 @@ class UserDao:
     def __init__(self):
         self.rd = ReviewDao()
 
+    def get_all_usernames(self):
+        users = []
+        with psycopg.connect(host="localhost", port="5432", dbname="postgres", user="postgres",
+                             password="password") as conn:
+            with conn.cursor() as cur:
+                cur.execute(f"SELECT username FROM project_2.users")
+                for line in cur:
+                    users.append(line[0])
+                return users
+
+    def check_password(self, username, password):
+        with psycopg.connect(host="localhost", port="5432", dbname="postgres", user="postgres",
+                             password="password") as conn:
+            with conn.cursor() as cur:
+                cur.execute(f"SELECT * FROM project_2.users WHERE username = '{username}' "
+                            f"AND password = crypt('{password}', password);")
+                return cur.fetchone()
+
 # Create
     def create_user(self, user_obj):
         with psycopg.connect(host="localhost", port="5432", dbname="postgres", user="postgres",
