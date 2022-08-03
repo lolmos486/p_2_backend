@@ -31,6 +31,16 @@ class BookDao:
                     book.set_review(rev)
                 return book
 
+    def get_genre_list(self):
+        genres = []
+        with psycopg.connect(host="localhost", port="5432", dbname="postgres", user="postgres",
+                             password="password") as conn:
+            with conn.cursor() as cur:
+                cur.execute("SELECT DISTINCT genre FROM project_2.books")
+                for line in cur:
+                    genres.append(line)
+                return genres
+
 # Update
     def edit_book_attributes(self, book_obj):
         with psycopg.connect(host="localhost", port="5432", dbname="postgres", user="postgres",
