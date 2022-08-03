@@ -16,14 +16,14 @@ us = UserService()
 today = datetime.date.today()
 print(today)
 
-# u1 = User('Bren', 'tabaxi', today)
-# b1 = Book(9780786966912, "Explorer's Guide to Wildemount", "Matthew Mercer", "1", "TTRPG")
+u1 = User('Bren', 'tabaxi', today)
+b1 = Book(9780786966912, "Explorer's Guide to Wildemount", "Matthew Mercer", "1", "TTRPG", "book")
 
 # ud.create_user(u1)
-# bd.new_book(b1)
+bd.new_book(b1)
 rev = "I really liked EGtM! It builds a framework that I can then use to break my players."
-# r1 = Review(9780786966912, 'Bren', rev, 5)
-# rd.new_review(r1)
+r1 = Review(9780786966912, 'Bren', rev, 5)
+rd.new_review(r1)
 
 print(ud.get_all_usernames())
 print(us.check_password('Bren', 'tabaxi'))
