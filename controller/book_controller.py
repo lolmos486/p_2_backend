@@ -15,7 +15,8 @@ def new_book():
     author = request.form.get('author')
     edition = request.form.get('edition')
     genre = request.form.get('genre')
-    book = Book(isbn, title, author, edition, genre)
+    type = request.form.get('type')
+    book = Book(isbn, title, author, edition, genre, type)
     try:
         bs.new_book(book)
         return f"{title} added to database"

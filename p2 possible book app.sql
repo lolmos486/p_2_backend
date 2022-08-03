@@ -18,7 +18,8 @@ CREATE TABLE project_2.books (
 	title VARCHAR NOT NULL,
 	author VARCHAR NOT NULL,
 	edition INTEGER,
-	genre VARCHAR
+	genre VARCHAR,
+	media_type VARCHAR
 );
 
 CREATE TABLE project_2.reviews (

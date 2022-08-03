@@ -11,9 +11,9 @@ class BookDao:
         with psycopg.connect(host="localhost", port="5432", dbname="postgres", user="postgres",
                              password="password") as conn:
             with conn.cursor() as cur:
-                cur.execute(f"INSERT INTO project_2.books (isbn, title, author, edition) VALUES "
-                            f"(%s, %s, %s, %s, %s);", (book_obj.isbn, book_obj.title, book_obj.author, book_obj.edition,
-                                                       book_obj.genre))
+                cur.execute(f"INSERT INTO project_2.books (isbn, title, author, edition, genre, media_type) VALUES "
+                            f"(%s, %s, %s, %s, %s, %s);", (book_obj.isbn, book_obj.title, book_obj.author, book_obj.edition,
+                                                       book_obj.genre, book_obj.type))
                 conn.commit()
 
 
@@ -25,7 +25,7 @@ class BookDao:
             with conn.cursor() as cur:
                 cur.execute(f"SELECT * FROM project_2.books WHERE isbn = '{isbn}';")
                 for line in cur:
-                    book = Book(line[0], line[1], line[2], line[3], line[4])
+                    book = Book(line[0], line[1], line[2], line[3], line[4], line[5])
                 revs = self.rd.get_reviews(None, isbn)
                 for rev in revs:
                     book.set_review(rev)
