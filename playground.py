@@ -19,3 +19,6 @@ print(today)
 
 # ud.create_user(u1)
 # bd.new_book(b1)
+rev = "I really liked EGtM! It builds a framework that I can then use to break my players."
+r1 = Review(9780786966912, 'Bren', rev, 5)
+rd.new_review(r1)

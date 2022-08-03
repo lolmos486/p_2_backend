@@ -1,9 +1,28 @@
+from dao.book_dao import BookDao
+
+class BookService:
+    def __init__(self):
+        self.bd = BookDao()
 
 # Create
+    def new_book(self, book_obj):
+        return self.bd.new_book(book_obj)
 
 # Read
+    def get_book(self, isbn):
+        return self.bd.get_book(isbn)
 
 # Update
+    def edit_book_attributes(self, book_obj):
+        return self.bd.edit_book_attributes(book_obj)
+
+    def edit_isbn(self, old_isbn, new_book_obj):
+        return self.bd.edit_isbn(old_isbn, new_book_obj)
 
 # Delete
+    def delete_book(self, isbn):
+        return "Technically, the ability to delete books has been programmed in, but no, no you may not. " \
+               "Please submit in writing to the management team why you think a book should be deleted from our database." \
+               "Be prepared to recieve a long lecture referencing the Library of Alexandria." \
+               "The answer will still be no."
 
