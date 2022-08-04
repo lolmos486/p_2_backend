@@ -31,7 +31,6 @@ def login():
 
 @uc.route('/logout', methods=['POST'])
 def logout():
-
     [session.pop(key) for key in list(session.keys())]
     print(session)
     return {

@@ -7,8 +7,9 @@ from exception.invalid_param_error import InvalParam
 bc = Blueprint('book_controller', __name__)
 bs = BookService()
 
+
 # Create
-@bc.route('/book', methods = ['POST'])
+@bc.route('/book', methods=['POST'])
 def new_book():
     isbn = request.form.get('isbn')
     title = request.form.get('title')
@@ -36,8 +37,9 @@ def get_book(isbn):
                    "message": f"{e}"
                }, 400
 
+
 # Update
-@bc.route('/books/<isbn>', methods = ['PUT'])
+@bc.route('/books/<isbn>', methods=['PUT'])
 def edit_book_attributes(isbn):
     title = request.form.get('title')
     author = request.form.get('author')
@@ -53,7 +55,8 @@ def edit_book_attributes(isbn):
                    "message": f"{e}"
                }, 400
 
-@bc.route('/books/<oldisbn>', methods = ['PUT'])
+
+@bc.route('/books/<oldisbn>', methods=['PUT'])
 def edit_isbn(oldisbn):
     new_isbn = request.form.get('new-isbn')
     book = bs.get_book(oldisbn)
@@ -68,6 +71,6 @@ def edit_isbn(oldisbn):
 
 
 # Delete
-@bc.route('/books/<isbn>', methods = ['DELETE'])
+@bc.route('/books/<isbn>', methods=['DELETE'])
 def delete_book(isbn):
     return "No"
