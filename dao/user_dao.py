@@ -38,6 +38,8 @@ class UserDao:
                 cur.execute(f"INSERT INTO project_2.users (username, password, fav_genre, date_joined) "
                             f"VALUES ('{user_obj.usn}', crypt('{user_obj.pwd}', gen_salt('bf')), "
                             f"'{user_obj.fav_genre}', '{user_obj.joined}');")
+                conn.commit()
+                return f"{user_obj.usn} successfully registered."
 
 # Read
     def get_user(self, usn):

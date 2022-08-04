@@ -1,7 +1,9 @@
 from flask import Blueprint, request, session, current_app
 import json
+from model.user import User
 from service.user_serivce import UserService
 from exception.invalid_param_error import InvalParam
+import datetime
 
 uc = Blueprint('user_controller', __name__)
 us = UserService()
@@ -40,27 +42,52 @@ def logout():
 # Create
 @uc.route('/users/new-user')
 def create_user():
-    pass
+    usn = request.form.get('username')
+    pwd = request.form.get('password')
+    joined = datetime.date.today()
+    user = User(usn, pwd, joined)
+    try:
+        return us.create_user(user)
+    except InvalParam as e:
+        return {
+                   "message": f"{e}"
+               }, 400
 
 # Read
 @uc.route('/users/<usn>')
 def get_user(usn):
-    pass
+    try:
+        return us.get_user(usn)
+    except InvalParam as e:
+        return {
+                   "message": f"{e}"
+               }, 400
 
 @uc.route('/users')
 def get_all_users():
-    pass
+    return us.get_all_users()
 
 # Update
 @uc.route('/users/<usn>', methods = ['POST'])
 def update_fav_genre(usn):
-    pass
+    if "user" in session:
+        fav_genre = request.form.get('fav-genre')
+        return us.update_fav_genre(usn, fav_genre)
+    else:
+        return "Not logged in"
 
 @uc.route('/admin/<usn>', methods = ['POST'])
 def update_admin(usn):
-    pass
+    if "user" in session:
+        if session['user']['admin']:
+            admin = request.form.get('is-admin')
+            return us.update_admin(usn, admin)
+        else:
+            return "Must be an admin to change admin privileges."
+    else:
+        return "Not logged in"
 
 # Delete
 @uc.route('/users/<usn>',  methods = ['DELETE'])
 def delete_user(usn):
-    pass
+    return us.delete_user(usn)
