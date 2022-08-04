@@ -1,4 +1,5 @@
 from dao.book_dao import BookDao
+from exception.invalid_param_error import InvalParam
 
 class BookService:
     def __init__(self):
@@ -6,7 +7,10 @@ class BookService:
 
 # Create
     def new_book(self, book_obj):
-        return self.bd.new_book(book_obj)
+        if book_obj.isbn in self.bd.get_all_isbns():
+            raise InvalParam(f"Isbn {book_obj.isbn} already exists in system.")
+        else:
+            return self.bd.new_book(book_obj)
 
 # Read
     def get_book(self, isbn):

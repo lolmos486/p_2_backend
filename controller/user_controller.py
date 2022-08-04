@@ -40,7 +40,7 @@ def logout():
 
 
 # Create
-@uc.route('/users/new-user')
+@uc.route('/new-user', methods=['POST'])
 def create_user():
     usn = request.form.get('username')
     pwd = request.form.get('password')
@@ -53,22 +53,28 @@ def create_user():
                    "message": f"{e}"
                }, 400
 
+
 # Read
 @uc.route('/users/<usn>')
 def get_user(usn):
     try:
-        return us.get_user(usn)
+        return us.get_user(usn).to_dict()
     except InvalParam as e:
         return {
                    "message": f"{e}"
                }, 400
 
+
 @uc.route('/users')
 def get_all_users():
-    return us.get_all_users()
+    users = []
+    for user in us.get_all_users():
+        users.append(user.to_dict())
+    return json.dumps(users)
+
 
 # Update
-@uc.route('/users/<usn>', methods = ['POST'])
+@uc.route('/users/<usn>', methods = ['PUT'])
 def update_fav_genre(usn):
     if "user" in session:
         fav_genre = request.form.get('fav-genre')
@@ -76,7 +82,8 @@ def update_fav_genre(usn):
     else:
         return "Not logged in"
 
-@uc.route('/admin/<usn>', methods = ['POST'])
+
+@uc.route('/admin/<usn>', methods = ['PUT'])
 def update_admin(usn):
     if "user" in session:
         if session['user']['admin']:
@@ -86,6 +93,7 @@ def update_admin(usn):
             return "Must be an admin to change admin privileges."
     else:
         return "Not logged in"
+
 
 # Delete
 @uc.route('/users/<usn>',  methods = ['DELETE'])

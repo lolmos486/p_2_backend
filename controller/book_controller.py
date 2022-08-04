@@ -30,7 +30,7 @@ def new_book():
 @bc.route('/books/<isbn>')
 def get_book(isbn):
     try:
-        return bs.get_book(isbn)
+        return bs.get_book(isbn).to_dict()
     except InvalParam as e:
         return {
                    "message": f"{e}"
