@@ -6,6 +6,16 @@ class BookDao:
     def __init__(self):
         self.rd = ReviewDao()
 
+    def get_all_isbns(self):
+        isbns = []
+        with psycopg.connect(host="localhost", port="5432", dbname="postgres", user="postgres",
+                             password="password") as conn:
+            with conn.cursor() as cur:
+                cur.execute(f"SELECT isbn FROM project_2.books")
+                for line in cur:
+                    isbns.append(line[0])
+                return isbns
+
 # Create
     def new_book(self, book_obj):
         with psycopg.connect(host="localhost", port="5432", dbname="postgres", user="postgres",

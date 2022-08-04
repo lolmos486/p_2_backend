@@ -46,7 +46,7 @@ class UserDao:
         with psycopg.connect(host="localhost", port="5432", dbname="postgres", user="postgres",
                              password="password") as conn:
             with conn.cursor() as cur:
-                cur.execute(f"SELECT * FROM project_2.users WHERE username = {usn};")
+                cur.execute(f"SELECT * FROM project_2.users WHERE username = '{usn}';")
                 for line in cur:
                     user = User(line[1], line[2], line[4])
                     user.set_id(line[0])
@@ -69,6 +69,9 @@ class UserDao:
                     user.set_id(line[0])
                     user.set_fav_genre(line[3])
                     user.set_admin(line[5])
+                    revs = self.rd.get_reviews(user.usn, None)
+                    for rev in revs:
+                        user.set_review(rev)
                     users.append(user)
                 return users
 

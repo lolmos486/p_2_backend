@@ -43,3 +43,15 @@ class User:
 
     def get_want_to_read(self):
         return self.want_to_read
+
+    def to_dict(self):
+        revs = []
+        for rev in self.reviews:
+            revs.append(rev.to_dict())
+        return {
+            'username': self.usn,
+            'favorite genre': self.fav_genre,
+            'joined': str(self.joined)[:10:],
+            # 'want to read': self.want_to_read,
+            'reviews': revs
+        }
