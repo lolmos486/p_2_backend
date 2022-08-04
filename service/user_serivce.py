@@ -23,7 +23,11 @@ class UserService():
 
 # Read
     def get_user(self, usn):
-        return self.ud.get_user(usn)
+        if usn in self.ud.get_all_usernames():
+            return self.ud.get_user(usn)
+        else:
+            raise InvalParam("Username not in database.")
+
 
     def get_all_users(self):
         return self.ud.get_all_users()

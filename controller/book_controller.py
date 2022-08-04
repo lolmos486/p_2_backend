@@ -24,7 +24,7 @@ def new_book():
         return {
                    "message": f"{e}"
                }, 400
-    pass
+
 
 # Read
 @bc.route('/books/<isbn>')
@@ -39,11 +39,32 @@ def get_book(isbn):
 # Update
 @bc.route('/books/<isbn>', methods = ['PUT'])
 def edit_book_attributes(isbn):
-    pass
+    title = request.form.get('title')
+    author = request.form.get('author')
+    edition = request.form.get('edition')
+    genre = request.form.get('genre')
+    type = request.form.get('type')
+    book = Book(isbn, title, author, edition, genre, type)
+    try:
+        bs.edit_book_attributes(book)
+        return f"{title} edited."
+    except InvalParam as e:
+        return {
+                   "message": f"{e}"
+               }, 400
 
 @bc.route('/books/<oldisbn>', methods = ['PUT'])
 def edit_isbn(oldisbn):
-    pass
+    new_isbn = request.form.get('new-isbn')
+    book = bs.get_book(oldisbn)
+    book.isbn = new_isbn
+    try:
+        bs.edit_isbn(oldisbn, book)
+        return f"isbn for {book.title} edited."
+    except InvalParam as e:
+        return {
+                   "message": f"{e}"
+               }, 400
 
 
 # Delete
