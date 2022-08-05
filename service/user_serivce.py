@@ -8,7 +8,7 @@ class UserService():
     def check_password(self, username, password):
         if username in self.ud.get_all_usernames():
             check = self.ud.check_password(username, password)
-            print(check)
+            print("user_service, check: ", check)
             if check:
                 return {'username': check[1], 'admin': check[5]}
             else:

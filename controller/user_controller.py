@@ -11,12 +11,13 @@ us = UserService()
 @uc.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == 'POST' and "user" not in session:
-        print("method = POST")
+        print("user_controller/login :: method = POST")
         json_input = request.get_json()
         usn = json_input['username']
         pwd = json_input['password']
         try:
             key = us.check_password(usn, pwd)
+            print("user_controller/login :: key: ", key)
             session["user"] = key
             return session["user"], 200
         except InvalParam as e:
