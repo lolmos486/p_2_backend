@@ -14,7 +14,7 @@ class UserDao:
         with psycopg.connect(host="localhost", port="5432", dbname="postgres", user="postgres",
                              password="password") as conn:
             with conn.cursor() as cur:
-                cur.execute(f"SELECT username FROM users")
+                cur.execute(f"SELECT username FROM project_2.users")
                 for line in cur:
                     users.append(line[0])
                 return users
@@ -23,7 +23,7 @@ class UserDao:
         with psycopg.connect(host="localhost", port="5432", dbname="postgres", user="postgres",
                              password="password") as conn:
             with conn.cursor() as cur:
-                cur.execute(f"SELECT * FROM users WHERE username = '{username}' "
+                cur.execute(f"SELECT * FROM project_2.users WHERE username = '{username}' "
                             f"AND password = '{password}';")
                 return cur.fetchone()
 
@@ -45,7 +45,7 @@ class UserDao:
         with psycopg.connect(host="localhost", port="5432", dbname="postgres", user="postgres",
                              password="password") as conn:
             with conn.cursor() as cur:
-                cur.execute(f"SELECT * FROM users WHERE username = '{usn}';")
+                cur.execute(f"SELECT * FROM project_2.users WHERE username = '{usn}';")
                 for line in cur:
                     user = User(line[1], line[2], line[4])
                     user.set_id(line[0])
@@ -62,7 +62,7 @@ class UserDao:
         with psycopg.connect(host="localhost", port="5432", dbname="postgres", user="postgres",
                              password="password") as conn:
             with conn.cursor() as cur:
-                cur.execute(f"SELECT * FROM users;")
+                cur.execute(f"SELECT * FROM project_2.users;")
                 for line in cur:
                     user = User(line[1], line[2], line[4])
                     user.set_id(line[0])
@@ -87,7 +87,7 @@ class UserDao:
         with psycopg.connect(host="localhost", port="5432", dbname="postgres", user="postgres",
                              password="password") as conn:
             with conn.cursor() as cur:
-                cur.execute(f"UPDATE users SET is_admin = '{admin}' WHERE username = '{usn}';")
+                cur.execute(f"UPDATE project_2.users SET is_admin = '{admin}' WHERE username = '{usn}';")
                 conn.commit()
 
 # Delete
@@ -96,5 +96,5 @@ class UserDao:
         with psycopg.connect(host="localhost", port="5432", dbname="postgres", user="postgres",
                              password="password") as conn:
             with conn.cursor() as cur:
-                cur.execute(f"DELETE FROM users WHERE username = '{usn}';")
+                cur.execute(f"DELETE FROM project_2.users WHERE username = '{usn}';")
                 conn.commit()
