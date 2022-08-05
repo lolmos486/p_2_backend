@@ -80,7 +80,7 @@ class UserDao:
         with psycopg.connect(host="localhost", port="5432", dbname="postgres", user="postgres",
                              password="password") as conn:
             with conn.cursor() as cur:
-                cur.execute(f"UPDATE users SET fav_genre = '{fav_genre}' WHERE username = '{usn}';")
+                cur.execute(f"UPDATE project_2.users SET fav_genre = '{fav_genre}' WHERE username = '{usn}';")
                 conn.commit()
 
     def update_admin(self, usn, admin):
