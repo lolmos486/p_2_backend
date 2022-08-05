@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS project_2.books;
 CREATE TABLE project_2.users (
 	id SERIAL UNIQUE NOT NULL,
 	username VARCHAR UNIQUE NOT NULL,
-	password VARCHAR UNIQUE NOT NULL,
+	password VARCHAR NOT NULL,
 	fav_genre VARCHAR DEFAULT null,
 	date_joined TIMESTAMP NOT NULL,
 	is_admin BOOLEAN DEFAULT False
