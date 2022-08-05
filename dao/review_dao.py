@@ -11,12 +11,12 @@ class ReviewDao:
         with psycopg.connect(host="localhost", port="5432", dbname="postgres", user="postgres",
                              password="password") as conn:
             with conn.cursor() as cur:
-                cur.execute(f"INSERT INTO project_2.reviews (isbn, review, usr, rating) VALUES "
+                cur.execute(f"INSERT INTO reviews (isbn, review, usr, rating) VALUES "
                             f"(%s, %s, %s, %s);", (rev_obj.isbn, rev_obj.review, rev_obj.user, rev_obj.rating))
 
 # Read
     def get_reviews(self, usn, isbn):
-        call = "SELECT * FROM project_2.reviews"
+        call = "SELECT * FROM reviews"
         if usn:
             call = call + f" where usr = '{usn}'"
         if isbn:
