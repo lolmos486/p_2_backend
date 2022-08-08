@@ -1,6 +1,7 @@
 import psycopg
 from dao.review_dao import ReviewDao
 from model.book import Book
+import os
 
 class BookDao:
     def __init__(self):
@@ -8,8 +9,8 @@ class BookDao:
 
     def get_all_isbns(self):
         isbns = []
-        with psycopg.connect(host="database-1.ccqnc6akbbbx.us-west-1.rds.amazonaws.com", port="5432", dbname="",
-                             user="postgres", password="Demig0rg0n") as conn:
+        with psycopg.connect(host=os.environ['P2HOST'], port=os.environ['P2PORT'], dbname="", user=os.environ['P2USER'],
+                             password=os.environ['P2PW']) as conn:
             with conn.cursor() as cur:
                 cur.execute(f"SELECT isbn FROM books")
                 for line in cur:
@@ -18,8 +19,8 @@ class BookDao:
 
 # Create
     def new_book(self, book_obj):
-        with psycopg.connect(host="database-1.ccqnc6akbbbx.us-west-1.rds.amazonaws.com", port="5432", dbname="",
-                             user="postgres", password="Demig0rg0n") as conn:
+        with psycopg.connect(host=os.environ['P2HOST'], port=os.environ['P2PORT'], dbname="", user=os.environ['P2USER'],
+                             password=os.environ['P2PW']) as conn:
             with conn.cursor() as cur:
                 cur.execute(f"INSERT INTO books (isbn, title, author, edition, genre, media_type) VALUES "
                             f"(%s, %s, %s, %s, %s, %s);", (book_obj.isbn, book_obj.title, book_obj.author, book_obj.edition,
@@ -30,8 +31,8 @@ class BookDao:
 # Read
     def get_book(self, isbn):
         book = None
-        with psycopg.connect(host="database-1.ccqnc6akbbbx.us-west-1.rds.amazonaws.com", port="5432", dbname="",
-                             user="postgres", password="Demig0rg0n") as conn:
+        with psycopg.connect(host=os.environ['P2HOST'], port=os.environ['P2PORT'], dbname="", user=os.environ['P2USER'],
+                             password=os.environ['P2PW']) as conn:
             with conn.cursor() as cur:
                 cur.execute(f"SELECT * FROM books WHERE isbn = '{isbn}';")
                 for line in cur:
@@ -43,8 +44,8 @@ class BookDao:
 
     def get_genre_list(self):
         genres = []
-        with psycopg.connect(host="database-1.ccqnc6akbbbx.us-west-1.rds.amazonaws.com", port="5432", dbname="",
-                             user="postgres", password="Demig0rg0n") as conn:
+        with psycopg.connect(host=os.environ['P2HOST'], port=os.environ['P2PORT'], dbname="", user=os.environ['P2USER'],
+                             password=os.environ['P2PW']) as conn:
             with conn.cursor() as cur:
                 cur.execute("SELECT DISTINCT genre FROM books")
                 for line in cur:
@@ -53,8 +54,8 @@ class BookDao:
 
 # Update
     def edit_book_attributes(self, book_obj):
-        with psycopg.connect(host="database-1.ccqnc6akbbbx.us-west-1.rds.amazonaws.com", port="5432", dbname="",
-                             user="postgres", password="Demig0rg0n") as conn:
+        with psycopg.connect(host=os.environ['P2HOST'], port=os.environ['P2PORT'], dbname="", user=os.environ['P2USER'],
+                             password=os.environ['P2PW']) as conn:
             with conn.cursor() as cur:
                 cur.execute(f"UPDATE books SET title = '{book_obj.title}', author = '{book_obj.author}',"
                             f"edition = '{book_obj.edition}', genre = '{book_obj.genre}' "
@@ -64,8 +65,8 @@ class BookDao:
 
     def edit_isbn(self, old_isbn, new_book_obj):
         self.new_book(new_book_obj)
-        with psycopg.connect(host="database-1.ccqnc6akbbbx.us-west-1.rds.amazonaws.com", port="5432", dbname="",
-                             user="postgres", password="Demig0rg0n") as conn:
+        with psycopg.connect(host=os.environ['P2HOST'], port=os.environ['P2PORT'], dbname="", user=os.environ['P2USER'],
+                             password=os.environ['P2PW']) as conn:
             with conn.cursor() as cur:
                 cur.execute(f"UPDATE reviews SET isbn = '{new_book_obj.isbn}' WHERE isbn = '{old_isbn}';")
                 cur.execute(f"DELETE FROM books WHERE isbn = '{old_isbn}';")
@@ -74,8 +75,8 @@ class BookDao:
 
 # Delete
     def delete_book(self, isbn):
-        with psycopg.connect(host="database-1.ccqnc6akbbbx.us-west-1.rds.amazonaws.com", port="5432", dbname="",
-                             user="postgres", password="Demig0rg0n") as conn:
+        with psycopg.connect(host=os.environ['P2HOST'], port=os.environ['P2PORT'], dbname="", user=os.environ['P2USER'],
+                             password=os.environ['P2PW']) as conn:
             with conn.cursor() as cur:
                 cur.execute(f"DELETE FROM books WHERE isbn = '{isbn}';")
                 conn.commit()

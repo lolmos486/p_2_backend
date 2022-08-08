@@ -1,5 +1,6 @@
 import psycopg
 from model.review import Review
+import os
 
 class ReviewDao:
     def __init__(self):
@@ -8,8 +9,8 @@ class ReviewDao:
 
 # Create
     def new_review(self, rev_obj):
-        with psycopg.connect(host="database-1.ccqnc6akbbbx.us-west-1.rds.amazonaws.com", port="5432", dbname="",
-                             user="postgres", password="Demig0rg0n") as conn:
+        with psycopg.connect(host=os.environ['P2HOST'], port=os.environ['P2PORT'], dbname="", user=os.environ['P2USER'],
+                             password=os.environ['P2PW']) as conn:
             with conn.cursor() as cur:
                 cur.execute(f"INSERT INTO reviews (isbn, review, usr, rating) VALUES "
                             f"(%s, %s, %s, %s);", (rev_obj.isbn, rev_obj.review, rev_obj.user, rev_obj.rating))
@@ -23,8 +24,8 @@ class ReviewDao:
             call = call + f" where isbn = '{isbn}'"
         call = call + ";"
         reviews = []
-        with psycopg.connect(host="database-1.ccqnc6akbbbx.us-west-1.rds.amazonaws.com", port="5432", dbname="",
-                             user="postgres", password="Demig0rg0n") as conn:
+        with psycopg.connect(host=os.environ['P2HOST'], port=os.environ['P2PORT'], dbname="", user=os.environ['P2USER'],
+                             password=os.environ['P2PW']) as conn:
             with conn.cursor() as cur:
                 cur.execute(call)
                 for line in cur:
