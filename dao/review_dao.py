@@ -8,23 +8,23 @@ class ReviewDao:
 
 # Create
     def new_review(self, rev_obj):
-        with psycopg.connect(host="localhost", port="5432", dbname="postgres", user="postgres",
-                             password="password") as conn:
+        with psycopg.connect(host="database-1.ccqnc6akbbbx.us-west-1.rds.amazonaws.com", port="5432", dbname="",
+                             user="postgres", password="Demig0rg0n") as conn:
             with conn.cursor() as cur:
-                cur.execute(f"INSERT INTO project_2.reviews (isbn, review, usr, rating) VALUES "
+                cur.execute(f"INSERT INTO reviews (isbn, review, usr, rating) VALUES "
                             f"(%s, %s, %s, %s);", (rev_obj.isbn, rev_obj.review, rev_obj.user, rev_obj.rating))
 
 # Read
     def get_reviews(self, usn, isbn):
-        call = "SELECT * FROM project_2.reviews"
+        call = "SELECT * FROM reviews"
         if usn:
             call = call + f" where usr = '{usn}'"
         if isbn:
             call = call + f" where isbn = '{isbn}'"
         call = call + ";"
         reviews = []
-        with psycopg.connect(host="localhost", port="5432", dbname="postgres", user="postgres",
-                             password="password") as conn:
+        with psycopg.connect(host="database-1.ccqnc6akbbbx.us-west-1.rds.amazonaws.com", port="5432", dbname="",
+                             user="postgres", password="Demig0rg0n") as conn:
             with conn.cursor() as cur:
                 cur.execute(call)
                 for line in cur:
