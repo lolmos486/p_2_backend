@@ -1,5 +1,7 @@
 import psycopg
 from model.user import User
+import os
+
 
 from dao.review_dao import ReviewDao
 
@@ -11,8 +13,8 @@ class UserDao:
 
     def get_all_usernames(self):
         users = []
-        with psycopg.connect(host="database-1.ccqnc6akbbbx.us-west-1.rds.amazonaws.com", port="5432", dbname="",
-                             user="postgres", password="Demig0rg0n") as conn:
+        with psycopg.connect(host=os.environ['P2HOST'], port=os.environ['P2PORT'], dbname="", user=os.environ['P2USER'],
+                             password=os.environ['P2PW']) as conn:
             with conn.cursor() as cur:
                 cur.execute(f"SELECT username FROM users")
                 for line in cur:
@@ -20,8 +22,8 @@ class UserDao:
                 return users
 
     def check_password(self, username, password):
-        with psycopg.connect(host="database-1.ccqnc6akbbbx.us-west-1.rds.amazonaws.com", port="5432", dbname="",
-                             user="postgres", password="Demig0rg0n") as conn:
+        with psycopg.connect(host=os.environ['P2HOST'], port=os.environ['P2PORT'], dbname="", user=os.environ['P2USER'],
+                             password=os.environ['P2PW']) as conn:
             with conn.cursor() as cur:
                 cur.execute(f"SELECT * FROM users WHERE username = '{username}' "
                             f"AND password = '{password}';")
@@ -31,8 +33,8 @@ class UserDao:
 
 # Create
     def create_user(self, user_obj):
-        with psycopg.connect(host="database-1.ccqnc6akbbbx.us-west-1.rds.amazonaws.com", port="5432", dbname="",
-                             user="postgres", password="Demig0rg0n") as conn:
+        with psycopg.connect(host=os.environ['P2HOST'], port=os.environ['P2PORT'], dbname="", user=os.environ['P2USER'],
+                             password=os.environ['P2PW']) as conn:
             with conn.cursor() as cur:
                 cur.execute(f"INSERT INTO users (username, password, fav_genre, date_joined) "
                             f"VALUES ('{user_obj.usn}', '{user_obj.pwd}', "
@@ -42,8 +44,8 @@ class UserDao:
 
 # Read
     def get_user(self, usn):
-        with psycopg.connect(host="database-1.ccqnc6akbbbx.us-west-1.rds.amazonaws.com", port="5432", dbname="",
-                             user="postgres", password="Demig0rg0n") as conn:
+        with psycopg.connect(host=os.environ['P2HOST'], port=os.environ['P2PORT'], dbname="", user=os.environ['P2USER'],
+                             password=os.environ['P2PW']) as conn:
             with conn.cursor() as cur:
                 cur.execute(f"SELECT * FROM users WHERE username = '{usn}';")
                 for line in cur:
@@ -59,8 +61,8 @@ class UserDao:
 
     def get_all_users(self):
         users = []
-        with psycopg.connect(host="database-1.ccqnc6akbbbx.us-west-1.rds.amazonaws.com", port="5432", dbname="",
-                             user="postgres", password="Demig0rg0n") as conn:
+        with psycopg.connect(host=os.environ['P2HOST'], port=os.environ['P2PORT'], dbname="", user=os.environ['P2USER'],
+                             password=os.environ['P2PW']) as conn:
             with conn.cursor() as cur:
                 cur.execute(f"SELECT * FROM users;")
                 for line in cur:
@@ -77,15 +79,15 @@ class UserDao:
 
 # Update
     def update_fav_genre(self, usn, fav_genre):
-        with psycopg.connect(host="database-1.ccqnc6akbbbx.us-west-1.rds.amazonaws.com", port="5432", dbname="",
-                             user="postgres", password="Demig0rg0n") as conn:
+        with psycopg.connect(host=os.environ['P2HOST'], port=os.environ['P2PORT'], dbname="", user=os.environ['P2USER'],
+                             password=os.environ['P2PW']) as conn:
             with conn.cursor() as cur:
                 cur.execute(f"UPDATE users SET fav_genre = '{fav_genre}' WHERE username = '{usn}';")
                 conn.commit()
 
     def update_admin(self, usn, admin):
-        with psycopg.connect(host="database-1.ccqnc6akbbbx.us-west-1.rds.amazonaws.com", port="5432", dbname="",
-                             user="postgres", password="Demig0rg0n") as conn:
+        with psycopg.connect(host=os.environ['P2HOST'], port=os.environ['P2PORT'], dbname="", user=os.environ['P2USER'],
+                             password=os.environ['P2PW']) as conn:
             with conn.cursor() as cur:
                 cur.execute(f"UPDATE users SET is_admin = '{admin}' WHERE username = '{usn}';")
                 conn.commit()
@@ -93,8 +95,8 @@ class UserDao:
 # Delete
 
     def delete_user(self, usn):
-        with psycopg.connect(host="database-1.ccqnc6akbbbx.us-west-1.rds.amazonaws.com", port="5432", dbname="",
-                             user="postgres", password="Demig0rg0n") as conn:
+        with psycopg.connect(host=os.environ['P2HOST'], port=os.environ['P2PORT'], dbname="", user=os.environ['P2USER'],
+                             password=os.environ['P2PW']) as conn:
             with conn.cursor() as cur:
                 cur.execute(f"DELETE FROM users WHERE username = '{usn}';")
                 conn.commit()

@@ -1,10 +1,10 @@
-CREATE EXTENSION pgcrypto;
+--CREATE EXTENSION pgcrypto;
 
-DROP TABLE IF EXISTS project_2.reviews;
-DROP TABLE IF EXISTS project_2.users;
-DROP TABLE IF EXISTS project_2.books;
+DROP TABLE IF EXISTS reviews;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS books;
 
-CREATE TABLE project_2.users (
+CREATE TABLE users (
 	id SERIAL UNIQUE NOT NULL,
 	username VARCHAR UNIQUE NOT NULL,
 	password VARCHAR NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE project_2.users (
 	is_admin BOOLEAN DEFAULT False
 );
 
-CREATE TABLE project_2.books (
+CREATE TABLE books (
 	isbn VARCHAR PRIMARY KEY UNIQUE NOT NULL,
 	title VARCHAR NOT NULL,
 	author VARCHAR NOT NULL,
@@ -22,15 +22,15 @@ CREATE TABLE project_2.books (
 	media_type VARCHAR
 );
 
-CREATE TABLE project_2.reviews (
+CREATE TABLE reviews (
 	isbn VARCHAR NOT NULL,
 	review VARCHAR NOT NULL,
 	usr VARCHAR NOT NULL,
 	rating VARCHAR NOT NULL,
-	CONSTRAINT fk_usr FOREIGN KEY (usr) REFERENCES project_2.users(username),
-	CONSTRAINT fk_isbn FOREIGN KEY (isbn) REFERENCES project_2.books(isbn)
+	CONSTRAINT fk_usr FOREIGN KEY (usr) REFERENCES users(username),
+	CONSTRAINT fk_isbn FOREIGN KEY (isbn) REFERENCES books(isbn)
 );
 
-SELECT * FROM project_2.reviews;
-SELECT * FROM project_2.books;
-SELECT * FROM project_2.users;
+SELECT * FROM reviews;
+SELECT * FROM books;
+SELECT * FROM users;
