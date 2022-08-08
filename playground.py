@@ -6,6 +6,7 @@ from model.book import Book
 from model.review import Review
 from service.user_serivce import UserService
 import datetime
+import psycopg
 
 
 ud = UserDao()
@@ -16,10 +17,10 @@ us = UserService()
 today = datetime.date.today()
 print(today)
 
-u1 = User('Bren', 'tabaxi', today)
+# u1 = User('Bren', 'tabaxi', today)
 # b1 = Book(9780786966912, "Explorer's Guide to Wildemount", "Matthew Mercer", "1", "TTRPG", "book")
 
-ud.create_user(u1)
+# ud.create_user(u1)
 # bd.new_book(b1)
 # rev = "I really liked EGtM! It builds a framework that I can then use to break my players."
 # r1 = Review(9780786966912, 'Bren', rev, 5)
@@ -27,3 +28,7 @@ ud.create_user(u1)
 
 print(ud.get_all_usernames())
 print(us.check_password('Bren', 'tabaxi'))
+
+with psycopg.connect(host="database-1.ccqnc6akbbbx.us-west-1.rds.amazonaws.com", port="5432", dbname="",
+                     user="postgres", password="Demig0rg0n") as conn:
+    print("connection successful")
