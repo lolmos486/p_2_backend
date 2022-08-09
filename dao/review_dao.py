@@ -1,5 +1,6 @@
 import psycopg
 from model.review import Review
+import os
 
 class ReviewDao:
     def __init__(self):
@@ -8,23 +9,23 @@ class ReviewDao:
 
 # Create
     def new_review(self, rev_obj):
-        with psycopg.connect(host="localhost", port="5432", dbname="postgres", user="postgres",
-                             password="password") as conn:
+        with psycopg.connect(host=os.environ['P2HOST'], port=os.environ['P2PORT'], dbname="", user=os.environ['P2USER'],
+                             password=os.environ['P2PW']) as conn:
             with conn.cursor() as cur:
-                cur.execute(f"INSERT INTO project_2.reviews (isbn, review, usr, rating) VALUES "
+                cur.execute(f"INSERT INTO reviews (isbn, review, usr, rating) VALUES "
                             f"(%s, %s, %s, %s);", (rev_obj.isbn, rev_obj.review, rev_obj.user, rev_obj.rating))
 
 # Read
     def get_reviews(self, usn, isbn):
-        call = "SELECT * FROM project_2.reviews"
+        call = "SELECT * FROM reviews"
         if usn:
             call = call + f" where usr = '{usn}'"
         if isbn:
             call = call + f" where isbn = '{isbn}'"
         call = call + ";"
         reviews = []
-        with psycopg.connect(host="localhost", port="5432", dbname="postgres", user="postgres",
-                             password="password") as conn:
+        with psycopg.connect(host=os.environ['P2HOST'], port=os.environ['P2PORT'], dbname="", user=os.environ['P2USER'],
+                             password=os.environ['P2PW']) as conn:
             with conn.cursor() as cur:
                 cur.execute(call)
                 for line in cur:
